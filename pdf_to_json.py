@@ -2,6 +2,7 @@ import sys
 import json
 import fitz
 from multi_column import column_boxes  # 既存の column_boxes 関数をインポート
+from sort_by_reading_order import sort_by_reading_order  # 既存の sort_by_reading_order 関数をインポート
 
 def serialize_rect(rect):
     """fitz.IRect を JSON でシリアライズ可能な dict に変換する"""
@@ -24,8 +25,10 @@ def extract_pdf_structure(pdf_path, footer_margin=0, header_margin=0, no_image_t
             header_margin=header_margin,
             no_image_text=no_image_text,
         )
+        # 見出しを考慮したソート
+        reading_orderd_zones = sort_by_reading_order(zones, page.rect.width)
         # zones に固有番号を付与（1-based index）
-        zones_with_id = [{"zone_number": i + 1, "rect": zone} for i, zone in enumerate(zones)]
+        zones_with_id = [{"zone_number": i + 1, "rect": zone} for i, zone in enumerate(reading_orderd_zones)]
         print(f"Page {page_num + 1}: {len(zones_with_id)} zones")
 
         # zoneごとに初期構造を作成

@@ -54,9 +54,9 @@ function generateParagraphs(jsonData) {
     // line 内の各 span の text を連結
     const lineText = line.spans.map(span => span.text).join("").replace(/\t/g, "|");
     currentParagraph += lineText;
-    if (currentParagraph.includes("staff, warily trying to defend against any attackers.")) {
-      debugger;
-    }
+    // if (currentParagraph.includes("staff, warily trying to defend against any attackers.")) {
+    //   debugger;
+    // }
     // 現在行の最終 span の style を更新
     lastStyle = getStyle(line.spans[line.spans.length - 1]);
     // 現在の line の y0 を更新
